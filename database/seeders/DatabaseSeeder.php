@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use Database\Seeders\SettingSeeder;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
@@ -34,5 +35,7 @@ class DatabaseSeeder extends Seeder {
     ]);
     $superAdmin->assignRole('Super Admin');
     // \App\Models\User::factory(20)->create();
+
+    $this->call([SettingSeeder::class]);
   }
 }
