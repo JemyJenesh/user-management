@@ -48,6 +48,10 @@
                     </div>
                   @endforeach
               </fieldset>
+              <div class="d-none custom-control custom-checkbox" id="toggle">
+                <input type="checkbox" class="custom-control-input" id="send-email" name="send_email">
+                <label class="custom-control-label" for="send-email">Send email to the user</label>
+              </div>
               <button type="submit" class="btn btn-primary float-right">Update</button>
             </form>
           </div>
@@ -56,3 +60,19 @@
     </div>
   </div>
 @endsection
+
+@push('scripts')
+  <script>
+    document.querySelector('#password').addEventListener('input', checkPassword);
+
+    function checkPassword(e) {
+      if (e.target.value.length > 0) {
+        document.querySelector('#toggle').classList.remove('d-none');
+      } else {
+        document.querySelector('#toggle').classList.add('d-none');
+        document.querySelector("#send-email").checked = false;
+      }
+    }
+
+  </script>
+@endpush

@@ -102,6 +102,9 @@ class UserController extends Controller {
       'password' => $request->password ? Hash::make($request->password) : $user->password,
     ]);
     $user->syncRoles($request->role);
+    if ($request->has('password') && $request->has('send_email') && $request->send_email) {
+      $user->notify(new UserCreated($request->password));
+    }
 
     return redirect()->route('users.show', $user)->with('success', 'User updated successfully!');
   }
