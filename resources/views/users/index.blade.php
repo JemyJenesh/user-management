@@ -38,12 +38,20 @@
                     <td>{{ $user->getRoleNames()->implode('name', ', ') }}</td>
                     <td>{{ $user->email_verified_at ? $user->email_verified_at->diffForHumans() : 'Not verified' }}</td>
                     <td>
+                      <a href="{{ route('users.show', $user->id) }}" class="btn btn-success btn-sm">Show</a>
                       <a href="{{ route('users.edit', $user->id) }}" class="btn btn-primary btn-sm">Edit</a>
-                      <button class="btn btn-danger btn-sm">Delete</button>
+                      <form class="d-none" method="POST" action="{{ route('users.destroy', $user) }}"
+                        id="delete-user-{{ $user->id }}">
+                        @csrf
+                        @method('DELETE')
+                      </form>
+                      <button class="btn btn-danger btn-sm" onclick="deleteUser({{ $user }})">Delete</button>
                     </td>
                   </tr>
                 @empty
-
+                  <tr>
+                    <td align="center" colspan="6">No user found!</td>
+                  </tr>
                 @endforelse
               </tbody>
             </table>
@@ -56,3 +64,23 @@
     </div>
   </div>
 @endsection
+
+@push('scripts')
+  <script>
+    function deleteUser(user) {
+      window.swal({
+          title: "Delete user?",
+          text: `Are you sure you want to remove ${user.name} from users?`,
+          icon: "warning",
+          buttons: true,
+          dangerMode: true,
+        })
+        .then((willDelete) => {
+          if (willDelete) {
+            document.querySelector(`#delete-user-${user.id}`).submit();
+          }
+        });
+    }
+
+  </script>
+@endpush

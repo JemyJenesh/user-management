@@ -38,7 +38,7 @@ class UserController extends Controller {
   public function store(Request $request) {
     $request->validate([
       'name' => 'required',
-      'email' => 'required|email',
+      'email' => 'required|email|unique:users,email',
       'role' => 'required',
     ]);
     $rand = Str::random(20);
@@ -51,7 +51,7 @@ class UserController extends Controller {
 
     // dd(compact('rand', 'user'));
 
-    return redirect()->route('users.index')->with('success', 'User created successfully!');
+    return redirect()->route('users.show', $user)->with('success', 'User created successfully!');
   }
 
   /**
@@ -61,7 +61,7 @@ class UserController extends Controller {
    * @return \Illuminate\Http\Response
    */
   public function show(User $user) {
-    //
+    return view('users.show', compact('user'));
   }
 
   /**
@@ -71,7 +71,8 @@ class UserController extends Controller {
    * @return \Illuminate\Http\Response
    */
   public function edit(User $user) {
-    //
+    $roles = Role::all()->except(1);
+    return view('users.edit', compact('user', 'roles'));
   }
 
   /**
@@ -82,7 +83,20 @@ class UserController extends Controller {
    * @return \Illuminate\Http\Response
    */
   public function update(Request $request, User $user) {
-    //
+    $request->validate([
+      'name' => 'required',
+      'email' => 'required|email|unique:users,email,' . $user->id,
+      'password' => 'nullable|min:8',
+      'role' => 'required',
+    ]);
+    $user->update([
+      'name' => $request->name,
+      'email' => $request->email,
+      'password' => $request->password ? Hash::make($request->password) : $user->password,
+    ]);
+    $user->syncRoles($request->role);
+
+    return redirect()->route('users.show', $user)->with('success', 'User updated successfully!');
   }
 
   /**
@@ -92,6 +106,8 @@ class UserController extends Controller {
    * @return \Illuminate\Http\Response
    */
   public function destroy(User $user) {
-    //
+    $user->delete();
+
+    return redirect()->route('users.index')->with('success', 'User deleted successfully!');
   }
 }

@@ -20,18 +20,19 @@ class DatabaseSeeder extends Seeder {
       'access roles', 'show roles', 'create roles', 'edit roles', 'delete roles',
     ];
     $roles = ['Super Admin', 'Admin', 'User'];
-    \App\Models\User::factory(20)->create();
     foreach ($permissions as $permission) {
       Permission::create(['name' => $permission]);
     }
     foreach ($roles as $role) {
       Role::create(['name' => $role]);
     }
-    User::create([
+    $superAdmin = User::create([
       'name' => 'Super Admin',
       'email' => 'superadmin@quizy.com',
       'password' => Hash::make('password'),
       'email_verified_at' => now(),
     ]);
+    $superAdmin->assignRole('Super Admin');
+    // \App\Models\User::factory(20)->create();
   }
 }
