@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,3 +24,4 @@ Auth::routes(['verify' => true]);
 
 Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware(['auth', 'verified']);
 Route::resource('users', UserController::class)->middleware(['auth', 'verified']);
+Route::resource('roles', RoleController::class)->middleware(['auth', 'verified']);
