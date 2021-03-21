@@ -8,7 +8,9 @@
           <div class="card-header">{{ __('Update details') }}</div>
           <div class="card-body">
             <div class="mb-3">
-              <a href="{{ route('users.edit', $user) }}" class="btn btn-primary">Edit</a>
+              @can('edit users')
+                <a href="{{ route('users.edit', $user) }}" class="btn btn-primary">Edit</a>
+              @endcan
             </div>
             @if (session('success'))
               <div class="alert alert-success">

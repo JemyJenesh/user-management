@@ -61,12 +61,16 @@
               <li class="nav-item">
                 <a class="nav-link" href="{{ route('home') }}">{{ __('Home') }}</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{{ route('users.index') }}">{{ __('Users') }}</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{{ route('roles.index') }}">{{ __('Roles') }}</a>
-              </li>
+              @can('access users')
+                <li class="nav-item">
+                  <a class="nav-link" href="{{ route('users.index') }}">{{ __('Users') }}</a>
+                </li>
+              @endcan
+              @can('access roles')
+                <li class="nav-item">
+                  <a class="nav-link" href="{{ route('roles.index') }}">{{ __('Roles') }}</a>
+                </li>
+              @endcan
               <li class="nav-item dropdown">
                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
                   aria-haspopup="true" aria-expanded="false" v-pre>
