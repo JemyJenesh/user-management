@@ -40,7 +40,7 @@ class UserCreated extends Notification implements ShouldQueue {
       ->greeting('Hello')
       ->line('Your account has been created. To login use the following password with your email')
       ->line($this->password)
-      ->action('Login', env('APP_URL'))
+      ->action('Login', env('APP_URL') . '/login')
       ->line('Thank you for using our application!');
   }
 
