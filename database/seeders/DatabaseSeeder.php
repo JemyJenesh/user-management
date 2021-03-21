@@ -15,9 +15,12 @@ class DatabaseSeeder extends Seeder {
    * @return void
    */
   public function run() {
-    $permissions = ['access users', 'show users', 'create users', 'edit users', 'delete users'];
+    $permissions = [
+      'access users', 'show users', 'create users', 'edit users', 'delete users',
+      'access roles', 'show roles', 'create roles', 'edit roles', 'delete roles',
+    ];
     $roles = ['Super Admin', 'Admin', 'User'];
-    // \App\Models\User::factory(10)->create();
+    \App\Models\User::factory(20)->create();
     foreach ($permissions as $permission) {
       Permission::create(['name' => $permission]);
     }
