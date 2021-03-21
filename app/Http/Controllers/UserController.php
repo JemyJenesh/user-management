@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Notifications\UserCreated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -48,15 +49,14 @@ class UserController extends Controller {
       'email' => 'required|email|unique:users,email',
       'role' => 'required',
     ]);
-    $rand = Str::random(20);
+    $rand = Str::random(8);
     $user = User::create([
       'name' => $request->name,
       'email' => $request->email,
       'password' => Hash::make($rand),
     ]);
     $user->assignRole($request->role);
-
-    // dd(compact('rand', 'user'));
+    $user->notify(new UserCreated($rand));
 
     return redirect()->route('users.show', $user)->with('success', 'User created successfully!');
   }
