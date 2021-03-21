@@ -48,27 +48,27 @@
             @guest
               @if (Route::has('login'))
                 <li class="nav-item">
-                  <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                  <a class="nav-link @if (request()->routeIs('login')) active @endif" href="{{ route('login') }}">{{ __('Login') }}</a>
                 </li>
               @endif
 
               @if (Route::has('register'))
                 <li class="nav-item">
-                  <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                  <a class="nav-link @if (request()->routeIs('register')) active @endif" href="{{ route('register') }}">{{ __('Register') }}</a>
                 </li>
               @endif
             @else
               <li class="nav-item">
-                <a class="nav-link" href="{{ route('home') }}">{{ __('Home') }}</a>
+                <a class="nav-link @if (request()->routeIs('home')) active @endif" href="{{ route('home') }}">{{ __('Home') }}</a>
               </li>
               @can('access users')
                 <li class="nav-item">
-                  <a class="nav-link" href="{{ route('users.index') }}">{{ __('Users') }}</a>
+                  <a class="nav-link @if (request()->routeIs('users*')) active @endif" href="{{ route('users.index') }}">{{ __('Users') }}</a>
                 </li>
               @endcan
               @can('access roles')
                 <li class="nav-item">
-                  <a class="nav-link" href="{{ route('roles.index') }}">{{ __('Roles') }}</a>
+                  <a class="nav-link @if (request()->routeIs('roles*')) active @endif" href="{{ route('roles.index') }}">{{ __('Roles') }}</a>
                 </li>
               @endcan
               <li class="nav-item dropdown">
