@@ -9,6 +9,13 @@ use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller {
+  public function __construct() {
+    $this->middleware(['permission:access users'])->only('index');
+    $this->middleware(['permission:show users'])->only('show');
+    $this->middleware(['permission:create users'])->only('create', 'store');
+    $this->middleware(['permission:edit users'])->only('edit', 'update');
+    $this->middleware(['permission:delete users'])->only('destory');
+  }
   /**
    * Display a listing of the resource.
    *

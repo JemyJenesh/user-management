@@ -9,7 +9,9 @@
 
           <div class="card-body">
             <div class="mb-3">
-              <a href="{{ route('roles.create') }}" class="btn btn-primary">Create</a>
+              @can('create roles')
+                <a href="{{ route('roles.create') }}" class="btn btn-primary">Create</a>
+              @endcan
             </div>
             @if (session('success'))
               <div class="alert alert-success">
@@ -41,14 +43,20 @@
                     <td>{{ $role->users()->count() }}</td>
                     <td>{{ $role->getAllPermissions()->count() }}</td>
                     <td>
-                      <a href="{{ route('roles.show', $role->id) }}" class="btn btn-success btn-sm">Show</a>
-                      <a href="{{ route('roles.edit', $role->id) }}" class="btn btn-primary btn-sm">Edit</a>
+                      @can('show roles')
+                        <a href="{{ route('roles.show', $role->id) }}" class="btn btn-success btn-sm">Show</a>
+                      @endcan
+                      @can('edit roles')
+                        <a href="{{ route('roles.edit', $role->id) }}" class="btn btn-primary btn-sm">Edit</a>
+                      @endcan
                       <form class="d-none" method="POST" action="{{ route('roles.destroy', $role) }}"
                         id="delete-role-{{ $role->id }}">
                         @csrf
                         @method('DELETE')
                       </form>
-                      <button class="btn btn-danger btn-sm" onclick="deleteRole({{ $role }})">Delete</button>
+                      @can('delete roles')
+                        <button class="btn btn-danger btn-sm" onclick="deleteRole({{ $role }})">Delete</button>
+                      @endcan
                     </td>
                   </tr>
                 @empty

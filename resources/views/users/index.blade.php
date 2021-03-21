@@ -39,13 +39,17 @@
                     <td>{{ $user->email_verified_at ? $user->email_verified_at->diffForHumans() : 'Not verified' }}</td>
                     <td>
                       <a href="{{ route('users.show', $user->id) }}" class="btn btn-success btn-sm">Show</a>
-                      <a href="{{ route('users.edit', $user->id) }}" class="btn btn-primary btn-sm">Edit</a>
+                      @can('edit users')
+                        <a href="{{ route('users.edit', $user->id) }}" class="btn btn-primary btn-sm">Edit</a>
+                      @endcan
                       <form class="d-none" method="POST" action="{{ route('users.destroy', $user) }}"
                         id="delete-user-{{ $user->id }}">
                         @csrf
                         @method('DELETE')
                       </form>
-                      <button class="btn btn-danger btn-sm" onclick="deleteUser({{ $user }})">Delete</button>
+                      @can('delete users')
+                        <button class="btn btn-danger btn-sm" onclick="deleteUser({{ $user }})">Delete</button>
+                      @endcan
                     </td>
                   </tr>
                 @empty

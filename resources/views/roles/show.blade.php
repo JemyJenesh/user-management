@@ -8,7 +8,9 @@
           <div class="card-header">{{ __('Role details') }}</div>
           <div class="card-body">
             <div class="mb-3">
-              <a href="{{ route('roles.edit', $role) }}" class="btn btn-primary">Edit</a>
+              @can('edit roles')
+                <a href="{{ route('roles.edit', $role) }}" class="btn btn-primary">Edit</a>
+              @endcan
             </div>
             @if (session('success'))
               <div class="alert alert-success">
