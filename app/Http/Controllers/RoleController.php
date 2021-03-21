@@ -67,7 +67,7 @@ class RoleController extends Controller {
    * @return \Illuminate\Http\Response
    */
   public function show(Role $role) {
-    $permissions = Permission::all();
+    $permissions = Permission::paginate(5);
     return view('roles.show', compact('role', 'permissions'));
   }
 

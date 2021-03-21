@@ -29,19 +29,23 @@
                   <th>Users</th>
                   <td>{{ $role->users()->count() }}</td>
                 </tr>
+                <tr>
+                  <th>Permissions</th>
+                  <td>{{ $role->getAllPermissions()->count() . '/' . $permissions->total() }}</td>
+                </tr>
               </tbody>
             </table>
             <table class="table table-sm">
               <thead>
                 <tr>
                   <th>Permissions</th>
-                  <th>Access ({{ $role->getAllPermissions()->count() }})</th>
+                  <th>Access</th>
                 </tr>
               </thead>
               <tbody>
                 @forelse ($permissions as $permission)
                   <tr>
-                    <th>{{ $permission->name }}</th>
+                    <td>{{ $permission->name }}</td>
                     <td>
                       @if ($role->hasPermissionTo($permission->name))
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
@@ -65,6 +69,10 @@
                 @endforelse
               </tbody>
             </table>
+            <div class="d-flex justify-content-end">
+              {{ $permissions->links() }}
+            </div>
+
           </div>
         </div>
       </div>
