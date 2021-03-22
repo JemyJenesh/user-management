@@ -31,6 +31,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     'roles' => RoleController::class,
   ]);
 
-  Route::get('/settings', SettingController::class)->only('index');
+  Route::resource('/settings', SettingController::class)->only('index');
 
 });
