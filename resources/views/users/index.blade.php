@@ -37,7 +37,7 @@
                     </th>
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
-                    <td>{{ $user->getRoleNames()->implode('name', ', ') }}</td>
+                    <td>{{ $user->getRoleNames()->implode(', ') }}</td>
                     <td>{{ $user->email_verified_at ? $user->email_verified_at->diffForHumans() : 'Not verified' }}</td>
                     <td>
                       @can('show users')

@@ -35,7 +35,7 @@
                 </tr>
                 <tr>
                   <th>Roles</th>
-                  <td>{{ $user->getRoleNames()->implode('name', ', ') }}</td>
+                  <td>{{ $user->getRoleNames()->implode(', ') }}</td>
                 </tr>
               </tbody>
             </table>

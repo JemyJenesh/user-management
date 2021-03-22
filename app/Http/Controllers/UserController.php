@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Setting;
 use App\Models\User;
 use App\Notifications\UserCreated;
 use Illuminate\Http\Request;
@@ -34,7 +35,8 @@ class UserController extends Controller {
    */
   public function create() {
     $roles = Role::all()->except(1);
-    return view('users.create', compact('roles'));
+    $hasMultipleRoles = Setting::find(1)->value;
+    return view('users.create', compact('roles', 'hasMultipleRoles'));
   }
 
   /**
@@ -79,7 +81,8 @@ class UserController extends Controller {
    */
   public function edit(User $user) {
     $roles = Role::all()->except(1);
-    return view('users.edit', compact('user', 'roles'));
+    $hasMultipleRoles = Setting::find(1)->value;
+    return view('users.edit', compact('user', 'roles', 'hasMultipleRoles'));
   }
 
   /**

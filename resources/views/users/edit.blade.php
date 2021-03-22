@@ -39,13 +39,23 @@
                 <legend class="col-form-label col-sm-2 float-sm-left pt-0">Roles</legend>
                 <div class="col-sm-10">
                   @foreach ($roles as $role)
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" name="role" id="{{ $role->name }}"
-                        value="{{ $role->id }}" {{ $user->hasRole($role->name) ? 'checked' : '' }}>
-                      <label class="form-check-label" for="{{ $role->name }}">
-                        {{ $role->name }}
-                      </label>
-                    </div>
+                    @if ($hasMultipleRoles)
+                      <div class="form-check">
+                        <input class="form-check-input" name="role[]" type="checkbox" value="{{ $role->id }}"
+                          {{ $user->hasRole($role->name) ? 'checked' : '' }} id="{{ $role->name }}">
+                        <label class="form-check-label" for="{{ $role->name }}">
+                          {{ $role->name }}
+                        </label>
+                      </div>
+                    @else
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="role" id="{{ $role->name }}"
+                          value="{{ $role->id }}" {{ $user->hasRole($role->name) ? 'checked' : '' }}>
+                        <label class="form-check-label" for="{{ $role->name }}">
+                          {{ $role->name }}
+                        </label>
+                      </div>
+                    @endif
                   @endforeach
               </fieldset>
               <div class="d-none custom-control custom-checkbox" id="toggle">
